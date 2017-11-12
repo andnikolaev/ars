@@ -11,7 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
-public class Runner {
+public class Checkstyle {
     /**
      * Name for 'xml' format.
      */
@@ -28,7 +28,7 @@ public class Runner {
      */
     private static final String CREATE_LISTENER_EXCEPTION = "Main.createListener";
 
-    public static void main(String[] args) throws CheckstyleException, FileNotFoundException {
+    public static String start(String sourceFilePath, String configurationPath) throws CheckstyleException, FileNotFoundException {
         final Properties props = System.getProperties();
         // create a configuration
         final ThreadModeSettings multiThreadModeSettings =
@@ -50,22 +50,23 @@ public class Runner {
         final int errorCounter;
         final ClassLoader moduleClassLoader = Checker.class.getClassLoader();
         final RootModule rootModule = getRootModule(config.getName(), moduleClassLoader);
-
+        String message;
         try {
 
             rootModule.setModuleClassLoader(moduleClassLoader);
             rootModule.configure(config);
             rootModule.addListener(listener);
             List<File> files = new LinkedList<>();
-            files.add(new File("D:\\Eclipse Indigo Project\\03-09-Nikolaev\\src\\ru\\rsreu\\nikolaev0309\\Runner.java"));
+            files.add(new File(sourceFilePath));
             // run RootModule
             errorCounter = rootModule.process(files);
-            String message = rootModule.getMessage();
+            message = rootModule.getMessage();
             System.out.println(message);
         } finally {
             rootModule.destroy();
         }
         System.out.println(errorCounter);
+        return message;
     }
 
     private static AuditListener createListener(String format, String outputLocation) throws FileNotFoundException {

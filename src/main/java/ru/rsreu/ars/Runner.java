@@ -11,14 +11,14 @@ public class Runner extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("views/MainView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("MainView.fxml"));
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 
     public static void main(String[] args){
 //        try {
-//            Process process = Runtime.getRuntime().exec("java -jar checkstyle-8.2-all.jar -c PrutzkowConfiguration.xml Runner.java");
+//            Process process = Runtime.getRuntime().exec("java -jar checkstyle-8.2-all.jar -c PrutzkowConfiguration.xml Checkstyle.java");
 //            System.out.print(process.getOutputStream().);
 //        } catch (IOException e) {
 //

@@ -8,13 +8,19 @@ public class Report {
     private String group;
     private String number;
     private String listing;
+    private String checkstyleResult;
 
-    public Report(String owner, String group, String number) {
+    public Report(String owner, String group, String number, String checkstyleResult) {
         this.owner = owner;
         this.group = group;
         this.number = number;
+        this.checkstyleResult = checkstyleResult;
     }
 
+
+    public String getCheckstyleResult() {
+        return checkstyleResult;
+    }
 
     public String getListing() {
         return listing;

@@ -1,12 +1,15 @@
 package ru.rsreu.ars.controllers;
 
+import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import javafx.event.ActionEvent;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 
@@ -28,6 +31,9 @@ public class MainController {
     TextField groupNumber;
     @FXML
     TextField studentName;
+    @FXML
+    TextArea checkstyleMessage;
+
 
     private MainModel model = new MainModel();
     final private FileChooser fileChooser;
@@ -47,8 +53,15 @@ public class MainController {
     private void getFile(ActionEvent event) {
         Node node = (Node) event.getSource();
         File file = fileChooser.showOpenDialog(node.getScene().getWindow());
-        model.setFile(file);
-        fileNameLabel.setText(file.getAbsolutePath());
+        if (file != null) {
+            model.setFile(file);
+            fileNameLabel.setText(file.getAbsolutePath());
+            try {
+                checkstyleMessage.setText(model.checkstyle());
+            } catch (FileNotFoundException | CheckstyleException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @FXML
@@ -56,16 +69,27 @@ public class MainController {
         if (model.getFile() == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning Dialog");
-            alert.setContentText("Careful with the next step!");
-
+            alert.setContentText("Choose the file!");
+            alert.showAndWait();
+        } else if (studentName.getText().trim().isEmpty() || labNumber.getText().trim().isEmpty() || groupNumber.getText().trim().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setContentText("Fill all inputs!");
             alert.showAndWait();
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Information Dialog");
-            alert.setHeaderText(null);
-            alert.setContentText("I have a great message for you!");
-            model.generateReport(new Report(studentName.getText(),groupNumber.getText(),labNumber.getText()));
-            alert.showAndWait();
+           try {
+               model.generateReport(new Report(studentName.getText(), groupNumber.getText(), labNumber.getText(), checkstyleMessage.getText()));
+               alert.setTitle("Information Dialog");
+               alert.setHeaderText(null);
+               alert.setContentText("I have a great message for you!");
+               alert.showAndWait();
+           } catch (Exception e){
+               alert.setTitle("Information Dialog");
+               alert.setHeaderText(null);
+               alert.setContentText("Please close file with report!");
+               alert.showAndWait();
+           }
         }
     }
 }
