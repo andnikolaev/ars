@@ -7,15 +7,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTreeCell;
 import javafx.stage.FileChooser;
 
 import javafx.fxml.FXML;
 import ru.rsreu.ars.core.Report;
 import ru.rsreu.ars.core.MainModel;
+import ru.rsreu.ars.core.TreeHandler;
+import ru.rsreu.ars.core.ZIPHandler;
 
 /**
  * genarated by APX file generation template
@@ -26,6 +26,10 @@ public class MainController {
     @FXML
     Label fileNameLabel;
     @FXML
+    Label labelTemplate;
+    @FXML
+    Label labelConfiguration;
+    @FXML
     TextField labNumber;
     @FXML
     TextField groupNumber;
@@ -33,6 +37,8 @@ public class MainController {
     TextField studentName;
     @FXML
     TextArea checkstyleMessage;
+    @FXML
+    TreeView filesTreeView;
 
 
     private MainModel model = new MainModel();
@@ -42,7 +48,7 @@ public class MainController {
         fileChooser = new FileChooser();
         fileChooser.setTitle("View Pictures");
         fileChooser.setInitialDirectory(
-                new File(System.getProperty("user.home"))
+                new File("projects")
         );
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("All zips", "*.zip")
@@ -55,13 +61,45 @@ public class MainController {
         File file = fileChooser.showOpenDialog(node.getScene().getWindow());
         if (file != null) {
             model.setFile(file);
+            String unzipDirectory = model.getUnzipDirectory(file.getName());
+            ZIPHandler.unZipIt(file.getAbsolutePath(), unzipDirectory);
             fileNameLabel.setText(file.getAbsolutePath());
             try {
                 checkstyleMessage.setText(model.checkstyle());
             } catch (FileNotFoundException | CheckstyleException e) {
-                e.printStackTrace();
+                checkstyleMessage.setText(e.getMessage() + "\n" + e.getCause().getMessage());
             }
+            CheckBoxTreeItem<String> rootItem = new CheckBoxTreeItem<>(unzipDirectory);
+
+            // Hides the root item of the tree view.
+            filesTreeView.setShowRoot(false);
+
+            // Creates the cell factory.
+            filesTreeView.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
+
+            // Get a list of files.
+            File fileInputDirectoryLocation = new File(unzipDirectory);
+            File fileList[] = fileInputDirectoryLocation.listFiles();
+
+            // create tree
+            for (File files : fileList) {
+                TreeHandler.createTree(files, rootItem);
+            }
+
+            filesTreeView.setRoot(rootItem);
+
+            TreeHandler.getAllSelected(filesTreeView);
         }
+    }
+
+    @FXML
+    private void chooseConfiguration(){
+
+    }
+
+    @FXML
+    private void chooseTemplate(){
+
     }
 
     @FXML

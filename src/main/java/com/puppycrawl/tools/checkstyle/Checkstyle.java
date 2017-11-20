@@ -37,7 +37,7 @@ public class Checkstyle {
         final ConfigurationLoader.IgnoredModulesOptions ignoredModulesOptions = ConfigurationLoader.IgnoredModulesOptions.OMIT;
 
         final Configuration config = ConfigurationLoader.loadConfiguration(
-                "PrutzkowConfiguration.xml", new PropertiesExpander(props),
+                configurationPath, new PropertiesExpander(props),
                 ignoredModulesOptions, multiThreadModeSettings);
 
         // create a listener for output

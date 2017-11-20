@@ -3,6 +3,7 @@ package ru.rsreu.ars.core;
 import com.puppycrawl.tools.checkstyle.Checkstyle;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.tutego.jrtf.Rtf;
+import javafx.scene.control.CheckBoxTreeItem;
 
 import java.io.*;
 import java.util.List;
@@ -13,7 +14,7 @@ public class MainModel {
     private File file;
 
     private final static String template = "template1.rtf";
-    private static final String checkstyleConfiguration = "sun_checks.xml";
+    private static final String checkstyleConfiguration = "projects/PrutzkowConfiguration.xml";
 
     public void generateReport(Report report) {
         List<ZipEntry> fileEntries = ZIPHandler.getClassesEntry(file);
@@ -25,12 +26,11 @@ public class MainModel {
 
     public String checkstyle() throws FileNotFoundException, CheckstyleException {
         StringBuilder checkstyleResult = new StringBuilder();
-        String unzipDirectory = getUnzipDirectory(file.getName());
-        ZIPHandler.unZipIt(file.getAbsolutePath(), unzipDirectory);
+
         List<ZipEntry> fileEntries = ZIPHandler.getClassesEntry(file);
         for (ZipEntry entry : fileEntries) {
             if (entry.getName().contains(".java")) {
-                String sourceFilePath = unzipDirectory + "\\" + entry.getName();
+                String sourceFilePath = getUnzipDirectory(file.getName()) + "\\" + entry.getName();
                 checkstyleResult.append(Checkstyle.start(sourceFilePath, checkstyleConfiguration));
             }
         }
@@ -79,7 +79,7 @@ public class MainModel {
         return (directory.delete());
     }
 
-    private String getUnzipDirectory(String fileName) {
+    public String getUnzipDirectory(String fileName) {
         String[] unzip = fileName.split(Pattern.quote("\\"));
         return unzip[unzip.length - 1].replace(".zip", "");
     }
