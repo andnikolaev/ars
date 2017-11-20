@@ -11,11 +11,14 @@ import java.util.zip.ZipEntry;
 
 public class MainModel {
     private File file;
+    private final static String template = "template1.rtf";
+    private static final String checkstyleConfiguration = "sun_checks.xml";
+
 
     public void generateReport(Report report) {
         List<ZipEntry> fileEntries = ZIPHandler.getClassesEntry(file);
         report.setListing(ZIPHandler.getDataForTemplate(file, fileEntries));
-        writeRtfFile("template1.rtf", getUnzipDirectory(file.getName()) + ".rtf", report);
+        writeRtfFile(template, getUnzipDirectory(file.getName()) + ".rtf", report);
         deleteDirectory(new File(getUnzipDirectory(file.getName())));
     }
 
@@ -28,7 +31,7 @@ public class MainModel {
         for (ZipEntry entry : fileEntries) {
             if (entry.getName().contains(".java")) {
                 String sourceFilePath = unzipDirectory + "\\" + entry.getName();
-                checkstyleResult.append(Checkstyle.start(sourceFilePath, "PrutzkowConfiguration.xml"));
+                checkstyleResult.append(Checkstyle.start(sourceFilePath, checkstyleConfiguration));
             }
         }
         return checkstyleResult.toString();

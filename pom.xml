@@ -284,7 +284,7 @@
                             <excludes>**/it/resources/**/*,**/test/resources/**/*,**/test/resources-noncompilable/**/*</excludes>
                         </configuration>
                         <goals>
-                            <goal>check</goal>
+                           
                         </goals>
                     </execution>
                 </executions>
@@ -670,7 +670,7 @@
                     <execution>
                         <phase>verify</phase>
                         <goals>
-                            <goal>check</goal>
+                            
                         </goals>
                     </execution>
                 </executions>
@@ -682,7 +682,7 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>check</goal>
+                            
                         </goals>
                     </execution>
                 </executions>
@@ -695,7 +695,7 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>check</goal>
+                           
                         </goals>
                     </execution>
                 </executions>
@@ -708,7 +708,7 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>validate</goal>
+                            
                         </goals>
                     </execution>
                 </executions>
@@ -782,8 +782,7 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>check</goal>
-                            <goal>testCheck</goal>
+                           
                         </goals>
                     </execution>
                 </executions>
