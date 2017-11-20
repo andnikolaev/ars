@@ -6,10 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="AutomaticalReportSystem" />
         <module name="AutomaticReportSystemm" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="AutomaticalReportSystem" target="1.8" />
       <module name="AutomaticReportSystemm" target="1.8" />
     </bytecodeTargetLevel>
   </component>
