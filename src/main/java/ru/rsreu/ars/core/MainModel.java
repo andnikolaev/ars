@@ -11,11 +11,12 @@ import java.util.zip.ZipEntry;
 
 public class MainModel {
     private File file;
+    private final static String template = "template2.rtf";
 
     public void generateReport(Report report) {
         List<ZipEntry> fileEntries = ZIPHandler.getClassesEntry(file);
         report.setListing(ZIPHandler.getDataForTemplate(file, fileEntries));
-        writeRtfFile("template1.rtf", getUnzipDirectory(file.getName()) + ".rtf", report);
+        writeRtfFile(template, getUnzipDirectory(file.getName()) + ".rtf", report);
         deleteDirectory(new File(getUnzipDirectory(file.getName())));
     }
 
