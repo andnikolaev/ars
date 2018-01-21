@@ -13,7 +13,7 @@ import java.util.zip.ZipEntry;
 public class MainModel {
     private File file;
 
-    private final static String template = "template1.rtf";
+    private final static String template = "projects/template1.rtf";
     private static final String checkstyleConfiguration = "projects/PrutzkowConfiguration.xml";
 
     public void generateReport(Report report) {
@@ -79,7 +79,13 @@ public class MainModel {
         return (directory.delete());
     }
 
-    public String getUnzipDirectory(String fileName) {
+    public String unzipFile(File file ){
+        String unzipDirectory = getUnzipDirectory(file.getName());
+        ZIPHandler.unZipIt(file.getAbsolutePath(), unzipDirectory);
+        return unzipDirectory;
+    }
+
+    private String getUnzipDirectory(String fileName) {
         String[] unzip = fileName.split(Pattern.quote("\\"));
         return unzip[unzip.length - 1].replace(".zip", "");
     }

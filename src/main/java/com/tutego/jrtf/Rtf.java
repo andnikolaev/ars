@@ -49,24 +49,24 @@ public class Rtf
   final static String CHARSET1252 = Charset.forName( "Windows-1252" ).name();
 
   /** Associates an index with a color. */
-  private SortedMap<Integer, RtfHeaderColor> headerColors = new TreeMap<Integer, RtfHeaderColor>();
+  private SortedMap<Integer, RtfHeaderColor> headerColors = new TreeMap<>();
 
   /** List of fonts. */
-  private List<RtfHeaderFont> headerFonts = new ArrayList<RtfHeaderFont>();
+  private List<RtfHeaderFont> headerFonts = new ArrayList<>();
 
   /** List of style sheets. */
-  private List<RtfHeaderStyle> headerStyles = new ArrayList<RtfHeaderStyle>();
+  private List<RtfHeaderStyle> headerStyles = new ArrayList<>();
 
   /** Document info. */
   private StringBuilder info = new StringBuilder();
 
   /** Document format. */
-  private StringBuilder docfmt = new StringBuilder();
+  private StringBuilder documentFormat = new StringBuilder();
 
   /** Section data will be stored in 2 lists: One for the section formatting and headers */
-  private List<CharSequence> secfmtHdrftrs = new ArrayList<CharSequence>();
+  private List<CharSequence> secfmtHdrftrs = new ArrayList<>();
   /** and another list for the paragraphs itself. */
-  private List<RtfPara[]> sectionParagraphs = new ArrayList<RtfPara[]>();
+  private List<RtfPara[]> sectionParagraphs = new ArrayList<>();
 
   /**
    * Private constructor. The user will not instantiate this class.
@@ -84,9 +84,6 @@ public class Rtf
 
   /**
    * Converts a given char sequence into RTF format and stream it to the {@code Appendable}.
-   * @param out
-   * @param rawText
-   * @throws IOException 
    */
   static void asRtf( Appendable out, String rawText ) throws IOException
   {
@@ -196,7 +193,7 @@ public class Rtf
   public Rtf documentFormatting( RtfDocfmt... documentFormattings )
   {
     for ( RtfDocfmt rtfDocfmt : documentFormattings )
-      docfmt.append( rtfDocfmt.rtf );
+      documentFormat.append( rtfDocfmt.rtf );
 
     return this;
   }
@@ -334,7 +331,7 @@ public class Rtf
     /*
      * <File>     := '{' <header> <document>'}'
      * <header>   := \rtf <charset> \deff? <fonttbl> <colortbl> <stylesheet>?
-     * <document> := <info>? <docfmt>* <section>+
+     * <document> := <info>? <documentFormat>* <section>+
      * <section>  := <secfmt>* <hdrftr>? <para>+ ( \sect <section>)?
      */
     
@@ -423,13 +420,13 @@ public class Rtf
       out.append( "}\n" );      
     }
 
-    // Write <docfmt> 
+    // Write <documentFormat>
     
-    if ( docfmt.length() > 0 )
-      out.append( docfmt );
+    if ( documentFormat.length() > 0 )
+      out.append(documentFormat);
     
     /*
-     * <document> := <info>? <docfmt>* <section>+
+     * <document> := <info>? <documentFormat>* <section>+
      * <section>  := <secfmt>* <hdrftr>? <para>+ ( \sect <section>)?
      */
 

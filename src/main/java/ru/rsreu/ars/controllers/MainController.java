@@ -8,14 +8,12 @@ import java.io.FileNotFoundException;
 
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.CheckBoxTreeCell;
 import javafx.stage.FileChooser;
 
 import javafx.fxml.FXML;
 import ru.rsreu.ars.core.Report;
 import ru.rsreu.ars.core.MainModel;
 import ru.rsreu.ars.core.TreeHandler;
-import ru.rsreu.ars.core.ZIPHandler;
 
 /**
  * genarated by APX file generation template
@@ -42,53 +40,29 @@ public class MainController {
 
 
     private MainModel model = new MainModel();
-    final private FileChooser fileChooser;
-
-    {
-        fileChooser = new FileChooser();
-        fileChooser.setTitle("View Pictures");
-        fileChooser.setInitialDirectory(
-                new File("projects")
-        );
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("All zips", "*.zip")
-        );
-    }
+    private FileChooser fileChooser = new FileChooser();
+    private TreeHandler treeHandler;
 
     @FXML
     private void getFile(ActionEvent event) {
         Node node = (Node) event.getSource();
+        fileChooser = FileChooserConfiguration.setProjectFileChooser(fileChooser);
         File file = fileChooser.showOpenDialog(node.getScene().getWindow());
         if (file != null) {
             model.setFile(file);
-            String unzipDirectory = model.getUnzipDirectory(file.getName());
-            ZIPHandler.unZipIt(file.getAbsolutePath(), unzipDirectory);
             fileNameLabel.setText(file.getAbsolutePath());
+
+            //Checkstyle
             try {
                 checkstyleMessage.setText(model.checkstyle());
             } catch (FileNotFoundException | CheckstyleException e) {
                 checkstyleMessage.setText(e.getMessage() + "\n" + e.getCause().getMessage());
             }
-            CheckBoxTreeItem<String> rootItem = new CheckBoxTreeItem<>(unzipDirectory);
 
-            // Hides the root item of the tree view.
-            filesTreeView.setShowRoot(false);
-
-            // Creates the cell factory.
-            filesTreeView.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
-
-            // Get a list of files.
-            File fileInputDirectoryLocation = new File(unzipDirectory);
-            File fileList[] = fileInputDirectoryLocation.listFiles();
-
-            // create tree
-            for (File files : fileList) {
-                TreeHandler.createTree(files, rootItem);
-            }
-
-            filesTreeView.setRoot(rootItem);
-
-            TreeHandler.getAllSelected(filesTreeView);
+            //Generate tree
+            String unzipDirectory = model.unzipFile(file);
+            treeHandler = new TreeHandler(filesTreeView, unzipDirectory);
+            treeHandler.createAllTree();
         }
     }
 
@@ -104,6 +78,7 @@ public class MainController {
 
     @FXML
     private void processFile() {
+        treeHandler.getAllSelected(filesTreeView);
         if (model.getFile() == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning Dialog");
