@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import javafx.scene.Node;
@@ -16,6 +17,7 @@ import javafx.fxml.FXML;
 import ru.rsreu.ars.core.beans.Report;
 import ru.rsreu.ars.core.ARSModel;
 import ru.rsreu.ars.core.TreeHandler;
+import ru.rsreu.ars.core.beans.UserInformation;
 
 /**
  * genarated by APX file generation template
@@ -100,30 +102,32 @@ public class ARSController {
         }
         Map<String, String> identifiersWithText = model.fillIdentifiersWithText(identifiersWithType.keySet());
         UserInformationController userInformationController = new UserInformationController(identifiersWithType,identifiersWithText);
-        userInformationController.show();
-
-        model.setFilesForListing(treeHandler.getAllSelected(filesTreeView));
-        if (model.getFile() == null) {
-          AlertController.showEmptyTemplateFileAlert();
-        } else if (studentName.getText().trim().isEmpty() || labNumber.getText().trim().isEmpty() || groupNumber.getText().trim().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Warning Dialog");
-            alert.setContentText("Fill all inputs!");
-            alert.showAndWait();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-           try {
-               model.generateReport(new Report(studentName.getText(), groupNumber.getText(), labNumber.getText(), checkstyleMessage.getText()));
-               alert.setTitle("Information Dialog");
-               alert.setHeaderText(null);
-               alert.setContentText("I have a great message for you!");
-               alert.showAndWait();
-           } catch (Exception e){
-               alert.setTitle("Information Dialog");
-               alert.setHeaderText(null);
-               alert.setContentText("Please close file with report!");
-               alert.showAndWait();
-           }
+        List<UserInformation> userInformations = userInformationController.show();
+        if(userInformations != null){
+            model.setFilesForListing(treeHandler.getAllSelected(filesTreeView));
+            if (model.getFile() == null) {
+                AlertController.showEmptyTemplateFileAlert();
+            } else if (studentName.getText().trim().isEmpty() || labNumber.getText().trim().isEmpty() || groupNumber.getText().trim().isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning Dialog");
+                alert.setContentText("Fill all inputs!");
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                try {
+                    model.generateReport(new Report(studentName.getText(), groupNumber.getText(), labNumber.getText(), checkstyleMessage.getText()));
+                    alert.setTitle("Information Dialog");
+                    alert.setHeaderText(null);
+                    alert.setContentText("I have a great message for you!");
+                    alert.showAndWait();
+                } catch (Exception e){
+                    alert.setTitle("Information Dialog");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Please close file with report!");
+                    alert.showAndWait();
+                }
+            }
         }
+
     }
 }

@@ -19,7 +19,7 @@ public class UserInformationController {
         this.templateIdentifiersWithText = templateIdentifiersWithText;
     }
 
-    public void show() {
+    public List<UserInformation> show() {
 
         // Custom dialog
         Dialog dialog = new Dialog<>();
@@ -28,13 +28,12 @@ public class UserInformationController {
                 "press Okay (or click title bar 'X' for cancel).");
         dialog.setResizable(true);
 
-
+        //TODO Переделать в map <Key, UserInformations>
         List<UserInformation> userInformationsList = new ArrayList<>();
-        for (Map.Entry<String, String> entry : templateIdentifiersWithType.entrySet())
-        {
+        for (Map.Entry<String, String> entry : templateIdentifiersWithType.entrySet()) {
             Label label = new Label(templateIdentifiersWithText.get(entry.getKey()));
             TextField textField = new TextField();
-            UserInformation userInformation = new UserInformation(entry.getKey(),label,textField);
+            UserInformation userInformation = new UserInformation(entry.getKey(), label, textField);
             userInformationsList.add(userInformation);
             System.out.println(entry.getKey() + "/" + entry.getValue());
         }
@@ -46,7 +45,7 @@ public class UserInformationController {
         grid.setVgap(10);
         grid.setPadding(new Insets(20, 35, 20, 35));
         int i = 1;
-        for(UserInformation userInformation : userInformationsList){
+        for (UserInformation userInformation : userInformationsList) {
             grid.add(userInformation.getLabel(), 1, i);
             grid.add(userInformation.getTextField(), 2, i);
             i++;
@@ -54,18 +53,20 @@ public class UserInformationController {
         dialog.getDialogPane().setContent(grid);
 
         // Add button to dialog
-        ButtonType buttonTypeOk = new ButtonType("Okay", ButtonBar.ButtonData.OK_DONE);
+        ButtonType buttonTypeOk = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
+        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
         dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
-
+        dialog.getDialogPane().getButtonTypes().add(buttonTypeCancel);
 
 
         // Show dialog
         Optional result = dialog.showAndWait();
 
-        if (result.isPresent()) {
-
-//            actionStatus.setText("Result: " + result.get());
+        ButtonType resultButton = (ButtonType)result.get();
+        if (!resultButton.getText().equals("Cancel")) {
+            return userInformationsList;
         }
+        return null;
     }
 
 }
