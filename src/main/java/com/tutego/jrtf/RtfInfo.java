@@ -106,4 +106,14 @@ public class RtfInfo
     // <author> '{' \author #PCDATA '}'
     return new RtfInfo( "{\\author " + Rtf.asRtf( author ) + "}" );
   }
+  /**
+   * Sets the hash of this document.
+   * @param hash Hash.
+   * @return New RtfInfo object.
+   */
+  public static RtfInfo hash( String hash )
+  {
+    // <author> '{' \author #PCDATA '}'
+    return new RtfInfo( "{\\hash " + Rtf.asRtf( hash ) + "}" );
+  }
 }

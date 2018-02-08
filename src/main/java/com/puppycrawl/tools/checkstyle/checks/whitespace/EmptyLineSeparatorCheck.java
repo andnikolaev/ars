@@ -193,28 +193,28 @@ import com.puppycrawl.tools.checkstyle.utils.JavadocUtils;
 public class EmptyLineSeparatorCheck extends AbstractCheck {
 
     /**
-     * A key is pointing to the warning message empty.line.separator in "messages.properties"
+     * A key is pointing to the warning message empty.line.separator in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_SHOULD_BE_SEPARATED = "empty.line.separator";
 
     /**
      * A key is pointing to the warning message empty.line.separator.multiple.lines
-     *  in "messages.properties"
+     *  in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_MULTIPLE_LINES = "empty.line.separator.multiple.lines";
 
     /**
      * A key is pointing to the warning message empty.line.separator.lines.after
-     * in "messages.properties" file.
+     * in "messages_ru_RU.properties" file.
      */
     public static final String MSG_MULTIPLE_LINES_AFTER =
             "empty.line.separator.multiple.lines.after";
 
     /**
      * A key is pointing to the warning message empty.line.separator.multiple.lines.inside
-     * in "messages.properties" file.
+     * in "messages_ru_RU.properties" file.
      */
     public static final String MSG_MULTIPLE_LINES_INSIDE =
             "empty.line.separator.multiple.lines.inside";

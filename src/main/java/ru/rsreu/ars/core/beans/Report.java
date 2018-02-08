@@ -1,4 +1,4 @@
-package ru.rsreu.ars.core;
+package ru.rsreu.ars.core.beans;
 
 /**
  * Created by medwed on 9/20/2017.

@@ -69,19 +69,19 @@ public class WriteTagCheck
     extends AbstractCheck {
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_MISSING_TAG = "type.missingTag";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_WRITE_TAG = "javadoc.writeTag";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_TAG_FORMAT = "type.tagFormat";

@@ -44,13 +44,13 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtils;
 public class RegexpHeaderCheck extends AbstractHeaderCheck {
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_HEADER_MISSING = "header.missing";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_HEADER_MISMATCH = "header.mismatch";

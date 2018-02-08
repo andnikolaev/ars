@@ -41,17 +41,17 @@ import java.util.regex.Pattern;
 public final class Main {
     /**
      * A key pointing to the error counter
-     * message in the "messages.properties" file.
+     * message in the "messages_ru_RU.properties" file.
      */
     public static final String ERROR_COUNTER = "Main.errorCounter";
     /**
      * A key pointing to the load properties exception
-     * message in the "messages.properties" file.
+     * message in the "messages_ru_RU.properties" file.
      */
     public static final String LOAD_PROPERTIES_EXCEPTION = "Main.loadProperties";
     /**
      * A key pointing to the create listener exception
-     * message in the "messages.properties" file.
+     * message in the "messages_ru_RU.properties" file.
      */
     public static final String CREATE_LISTENER_EXCEPTION = "Main.createListener";
     /** Logger for Main. */

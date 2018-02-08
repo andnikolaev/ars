@@ -72,25 +72,25 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtils;
 public class GenericWhitespaceCheck extends AbstractCheck {
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_WS_PRECEDED = "ws.preceded";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_WS_FOLLOWED = "ws.followed";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_WS_NOT_PRECEDED = "ws.notPreceded";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_WS_ILLEGAL_FOLLOW = "ws.illegalFollow";

@@ -62,13 +62,13 @@ public class NewlineAtEndOfFileCheck
     extends AbstractFileSetCheck {
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_KEY_UNABLE_OPEN = "unable.open";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_KEY_NO_NEWLINE_EOF = "noNewlineAtEOF";

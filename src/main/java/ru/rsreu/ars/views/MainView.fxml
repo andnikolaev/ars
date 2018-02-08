@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.rsreu.ars.controllers.MainController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.rsreu.ars.controllers.ARSController">
    <Button layoutX="128.0" layoutY="142.0" mnemonicParsing="false" onAction="#processFile" text="Сформировать" />
    <Button layoutX="25.0" layoutY="142.0" mnemonicParsing="false" onAction="#getFile" text="Выбрать файл" />
    <TextField fx:id="labNumber" layoutX="137.0" layoutY="41.0" />
@@ -16,5 +16,5 @@
    <Label layoutX="25.0" layoutY="77.0" text="Номер группы" />
    <Label layoutX="25.0" layoutY="110.0" text="ФИО" />
    <Label fx:id="fileNameLabel" layoutX="85.0" layoutY="167.0" />
-   <TextArea fx:id="checkstyleMessage" layoutX="25.0" layoutY="184.0" prefHeight="212.0" prefWidth="707.0" />
+   <TextArea fx:id="checkstyleMessage" layoutX="22.0" layoutY="184.0" prefHeight="212.0" prefWidth="710.0" />
 </AnchorPane>

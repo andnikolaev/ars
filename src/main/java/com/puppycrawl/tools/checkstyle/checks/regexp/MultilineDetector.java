@@ -31,24 +31,24 @@ import com.puppycrawl.tools.checkstyle.api.LineColumn;
 class MultilineDetector {
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_REGEXP_EXCEEDED = "regexp.exceeded";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_REGEXP_MINIMUM = "regexp.minimum";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_EMPTY = "regexp.empty";
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_STACKOVERFLOW = "regexp.StackOverflowError";

@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.Locale;
+
 
 public class Runner extends Application {
 
@@ -23,6 +25,7 @@ public class Runner extends Application {
 //        } catch (IOException e) {
 //
 //        }
+        Locale.setDefault(new Locale("ru"));
          launch(args);
     }
 }

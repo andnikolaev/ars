@@ -49,19 +49,19 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 public class ImportControlCheck extends AbstractCheck implements ExternalResourceHolder {
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_MISSING_FILE = "import.control.missing.file";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_UNKNOWN_PKG = "import.control.unknown.pkg";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_DISALLOWED = "import.control.disallowed";

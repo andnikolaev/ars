@@ -41,31 +41,31 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtils;
 public final class MethodCountCheck extends AbstractCheck {
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_PRIVATE_METHODS = "too.many.privateMethods";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_PACKAGE_METHODS = "too.many.packageMethods";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_PROTECTED_METHODS = "too.many.protectedMethods";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_PUBLIC_METHODS = "too.many.publicMethods";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_MANY_METHODS = "too.many.methods";

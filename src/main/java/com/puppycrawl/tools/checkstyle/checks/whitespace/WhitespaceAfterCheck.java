@@ -65,13 +65,13 @@ public class WhitespaceAfterCheck
     extends AbstractCheck {
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_WS_NOT_FOLLOWED = "ws.notFollowed";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_WS_TYPECAST = "ws.typeCast";

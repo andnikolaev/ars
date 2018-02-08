@@ -1,14 +1,23 @@
 package ru.rsreu.ars;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTreeCell;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+
+import java.util.Optional;
+
 
 public class TestRunner extends Application {
-
+    private Text actionStatus;
+    private static final String titleTxt = "JavaFX Dialogs Example";
     public static void main(String[] args) {
         launch(args);
     }
@@ -37,6 +46,30 @@ public class TestRunner extends Application {
         StackPane root = new StackPane();
         root.getChildren().add(tree);
         primaryStage.setScene(new Scene(root, 300, 250));
+        displayDialog();
         primaryStage.show();
+    }
+
+    private void displayDialog() {
+
+
+    }
+
+    private class PhoneBook {
+
+        private String name;
+        private String phone;
+
+        PhoneBook(String s1, String s2) {
+
+            name = s1;
+            phone = s2;
+        }
+
+        @Override
+        public String toString() {
+
+            return (name + ", " + phone);
+        }
     }
 }

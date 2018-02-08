@@ -67,7 +67,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 public class PackageNameCheck
     extends AbstractCheck {
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_KEY = "name.invalidPattern";

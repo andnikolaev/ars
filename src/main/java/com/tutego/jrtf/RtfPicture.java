@@ -31,7 +31,8 @@
  */
 package com.tutego.jrtf;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Represents an image which can be added to an RTF document.

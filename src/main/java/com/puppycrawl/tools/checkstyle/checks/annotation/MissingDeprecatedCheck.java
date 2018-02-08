@@ -100,21 +100,21 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtils;
 @StatelessCheck
 public final class MissingDeprecatedCheck extends AbstractCheck {
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_KEY_ANNOTATION_MISSING_DEPRECATED =
             "annotation.missing.deprecated";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_KEY_JAVADOC_DUPLICATE_TAG =
             "javadoc.duplicateTag";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_KEY_JAVADOC_MISSING = "javadoc.missing";

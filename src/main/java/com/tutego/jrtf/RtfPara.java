@@ -32,7 +32,8 @@
 package com.tutego.jrtf;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Build a paragraph or a table row.

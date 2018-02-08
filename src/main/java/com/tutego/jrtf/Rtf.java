@@ -31,7 +31,9 @@
  */
 package com.tutego.jrtf;
 
-import java.io.*;
+import java.io.Closeable;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.*;
 

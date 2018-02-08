@@ -68,18 +68,18 @@ import com.puppycrawl.tools.checkstyle.utils.JavadocUtils;
 public class SummaryJavadocCheck extends AbstractJavadocCheck {
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_SUMMARY_FIRST_SENTENCE = "summary.first.sentence";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_SUMMARY_JAVADOC = "summary.javaDoc";
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_SUMMARY_JAVADOC_MISSING = "summary.javaDoc.missing";

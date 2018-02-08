@@ -79,13 +79,13 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtils;
 @StatelessCheck
 public final class MissingOverrideCheck extends AbstractCheck {
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_KEY_TAG_NOT_VALID_ON = "tag.not.valid.on";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_KEY_ANNOTATION_MISSING_OVERRIDE =

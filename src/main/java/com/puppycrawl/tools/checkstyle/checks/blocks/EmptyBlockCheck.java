@@ -68,13 +68,13 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtils;
 public class EmptyBlockCheck
     extends AbstractCheck {
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_KEY_BLOCK_NO_STATEMENT = "block.noStatement";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_KEY_BLOCK_EMPTY = "block.empty";

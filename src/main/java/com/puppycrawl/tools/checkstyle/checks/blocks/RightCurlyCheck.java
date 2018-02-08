@@ -85,25 +85,25 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtils;
 @StatelessCheck
 public class RightCurlyCheck extends AbstractCheck {
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_KEY_LINE_BREAK_BEFORE = "line.break.before";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_KEY_LINE_ALONE = "line.alone";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_KEY_LINE_SAME = "line.same";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_KEY_LINE_NEW = "line.new";

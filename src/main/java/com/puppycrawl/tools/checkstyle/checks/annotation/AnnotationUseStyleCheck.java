@@ -197,35 +197,35 @@ public final class AnnotationUseStyleCheck extends AbstractCheck {
     }
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_KEY_ANNOTATION_INCORRECT_STYLE =
         "annotation.incorrect.style";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_KEY_ANNOTATION_PARENS_MISSING =
         "annotation.parens.missing";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_KEY_ANNOTATION_PARENS_PRESENT =
         "annotation.parens.present";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_KEY_ANNOTATION_TRAILING_COMMA_MISSING =
         "annotation.trailing.comma.missing";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_KEY_ANNOTATION_TRAILING_COMMA_PRESENT =

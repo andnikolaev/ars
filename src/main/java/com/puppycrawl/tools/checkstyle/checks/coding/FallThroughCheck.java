@@ -73,13 +73,13 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtils;
 public class FallThroughCheck extends AbstractCheck {
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_FALL_THROUGH = "fall.through";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_FALL_THROUGH_LAST = "fall.through.last";

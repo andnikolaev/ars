@@ -78,19 +78,19 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtils;
 public class LeftCurlyCheck
     extends AbstractCheck {
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_KEY_LINE_NEW = "line.new";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_KEY_LINE_PREVIOUS = "line.previous";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_KEY_LINE_BREAK_AFTER = "line.break.after";

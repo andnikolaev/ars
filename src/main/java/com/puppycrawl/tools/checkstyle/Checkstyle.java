@@ -24,7 +24,7 @@ public class Checkstyle {
 
     /**
      * A key pointing to the create listener exception
-     * message in the "messages.properties" file.
+     * message in the "messages_ru_RU.properties" file.
      */
     private static final String CREATE_LISTENER_EXCEPTION = "Main.createListener";
 

@@ -86,25 +86,25 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 @FileStatefulCheck
 public class IndentationCheck extends AbstractCheck {
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_ERROR = "indentation.error";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_ERROR_MULTI = "indentation.error.multi";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_CHILD_ERROR = "indentation.child.error";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
+     * A key is pointing to the warning message text in "messages_ru_RU.properties"
      * file.
      */
     public static final String MSG_CHILD_ERROR_MULTI = "indentation.child.error.multi";

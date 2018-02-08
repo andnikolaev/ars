@@ -104,13 +104,13 @@ public class TranslationCheck extends AbstractFileSetCheck {
 
     /**
      * A key is pointing to the warning message text for missing key
-     * in "messages.properties" file.
+     * in "messages_ru_RU.properties" file.
      */
     public static final String MSG_KEY = "translation.missingKey";
 
     /**
      * A key is pointing to the warning message text for missing translation file
-     * in "messages.properties" file.
+     * in "messages_ru_RU.properties" file.
      */
     public static final String MSG_KEY_MISSING_TRANSLATION_FILE =
         "translation.missingTranslationFile";
@@ -121,13 +121,13 @@ public class TranslationCheck extends AbstractFileSetCheck {
 
     /**
      * A key is pointing to the warning message text for wrong language code
-     * in "messages.properties" file.
+     * in "messages_ru_RU.properties" file.
      */
     private static final String WRONG_LANGUAGE_CODE_KEY = "translation.wrongLanguageCode";
 
     /**
      * Regexp string for default translation files.
-     * For example, messages.properties.
+     * For example, messages_ru_RU.properties.
      */
     private static final String DEFAULT_TRANSLATION_REGEXP = "^.+\\..+$";
 
@@ -383,7 +383,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
 
     /**
      * Extracts the base name (the unique prefix) of resource bundle from translation file name.
-     * For example "messages" is the base name of "messages.properties",
+     * For example "messages" is the base name of "messages_ru_RU.properties",
      * "messages_de_AT.properties", "messages_en.properties", etc.
      * @param fileName the fully qualified name of the translation file.
      * @return the extracted base name.
@@ -414,7 +414,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
 
     /**
      * Extracts path from a file name which contains the path.
-     * For example, if file nam is /xyz/messages.properties, then the method
+     * For example, if file nam is /xyz/messages_ru_RU.properties, then the method
      * will return /xyz/.
      * @param fileNameWithPath file name which contains the path.
      * @return file path.

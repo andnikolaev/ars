@@ -5,21 +5,23 @@ import javafx.event.ActionEvent;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Map;
 
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 
 import javafx.fxml.FXML;
-import ru.rsreu.ars.core.Report;
-import ru.rsreu.ars.core.MainModel;
+import ru.rsreu.ars.core.beans.Report;
+import ru.rsreu.ars.core.ARSModel;
 import ru.rsreu.ars.core.TreeHandler;
 
 /**
  * genarated by APX file generation template
- * File name: MainController.java
+ * File name: ARSController.java
  */
-public class MainController {
+public class ARSController {
 
     @FXML
     Label fileNameLabel;
@@ -39,7 +41,7 @@ public class MainController {
     TreeView filesTreeView;
 
 
-    private MainModel model = new MainModel();
+    private ARSModel model = new ARSModel();
     private FileChooser fileChooser = new FileChooser();
     private TreeHandler treeHandler;
 
@@ -67,23 +69,42 @@ public class MainController {
     }
 
     @FXML
-    private void chooseConfiguration(){
-
+    private void chooseConfiguration(ActionEvent event){
+        Node node = (Node) event.getSource();
+        fileChooser = FileChooserConfiguration.setCheckstyleConfigurationFileChooser(fileChooser);
+        File file = fileChooser.showOpenDialog(node.getScene().getWindow());
+        if (file != null) {
+            model.setConfiguration(file);
+        }
     }
 
     @FXML
-    private void chooseTemplate(){
-
+    private void chooseTemplate(ActionEvent event){
+        Node node = (Node) event.getSource();
+        fileChooser = FileChooserConfiguration.setTemplateFileChooser(fileChooser);
+        File file = fileChooser.showOpenDialog(node.getScene().getWindow());
+        if (file != null) {
+            model.setTemplateForReport(file);
+        }
     }
 
     @FXML
     private void processFile() {
-        treeHandler.getAllSelected(filesTreeView);
+        Map<String, String> identifiersWithType = null;
+
+        try {
+            identifiersWithType = model.getAllIdentifiersFromTemplate();
+            System.out.println(identifiersWithType);
+        } catch (IOException e) {
+            AlertController.showEmptyTemplateFileAlert();
+        }
+        Map<String, String> identifiersWithText = model.fillIdentifiersWithText(identifiersWithType.keySet());
+        UserInformationController userInformationController = new UserInformationController(identifiersWithType,identifiersWithText);
+        userInformationController.show();
+
+        model.setFilesForListing(treeHandler.getAllSelected(filesTreeView));
         if (model.getFile() == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Warning Dialog");
-            alert.setContentText("Choose the file!");
-            alert.showAndWait();
+          AlertController.showEmptyTemplateFileAlert();
         } else if (studentName.getText().trim().isEmpty() || labNumber.getText().trim().isEmpty() || groupNumber.getText().trim().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning Dialog");

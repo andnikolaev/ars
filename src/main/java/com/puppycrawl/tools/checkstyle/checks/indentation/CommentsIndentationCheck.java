@@ -72,12 +72,12 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtils;
 public class CommentsIndentationCheck extends AbstractCheck {
 
     /**
-     * A key is pointing to the warning message text in "messages.properties" file.
+     * A key is pointing to the warning message text in "messages_ru_RU.properties" file.
      */
     public static final String MSG_KEY_SINGLE = "comments.indentation.single";
 
     /**
-     * A key is pointing to the warning message text in "messages.properties" file.
+     * A key is pointing to the warning message text in "messages_ru_RU.properties" file.
      */
     public static final String MSG_KEY_BLOCK = "comments.indentation.block";
 

@@ -42,17 +42,17 @@ public class DefaultLogger extends AutomaticBean implements AuditListener {
 
     /**
      * A key pointing to the add exception
-     * message in the "messages.properties" file.
+     * message in the "messages_ru_RU.properties" file.
      */
     public static final String ADD_EXCEPTION_MESSAGE = "DefaultLogger.addException";
     /**
      * A key pointing to the started audit
-     * message in the "messages.properties" file.
+     * message in the "messages_ru_RU.properties" file.
      */
     public static final String AUDIT_STARTED_MESSAGE = "DefaultLogger.auditStarted";
     /**
      * A key pointing to the finished audit
-     * message in the "messages.properties" file.
+     * message in the "messages_ru_RU.properties" file.
      */
     public static final String AUDIT_FINISHED_MESSAGE = "DefaultLogger.auditFinished";
 
