@@ -18,7 +18,7 @@ public class FileChooserConfiguration {
     public static FileChooser setTemplateFileChooser(FileChooser fileChooser) {
         fileChooser.setTitle("Choose template for report");
         fileChooser.setInitialDirectory(
-                new File("templates")
+                new File("projects")
         );
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("All rtf", "*.rtf")
@@ -28,7 +28,7 @@ public class FileChooserConfiguration {
     public static FileChooser setCheckstyleConfigurationFileChooser(FileChooser fileChooser) {
         fileChooser.setTitle("Choose checkstyle configuration");
         fileChooser.setInitialDirectory(
-                new File("checkstyle")
+                new File("projects")
         );
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("All xml", "*.xml")

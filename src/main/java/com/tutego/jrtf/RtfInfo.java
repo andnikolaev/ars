@@ -114,6 +114,6 @@ public class RtfInfo
   public static RtfInfo hash( String hash )
   {
     // <author> '{' \author #PCDATA '}'
-    return new RtfInfo( "{\\hash " + Rtf.asRtf( hash ) + "}" );
+    return new RtfInfo( "{\\\\id " + Rtf.asRtf( hash ) + "}" );
   }
 }

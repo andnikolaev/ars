@@ -3,24 +3,18 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="514.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.rsreu.ars.controllers.ARSController">
-   <Button layoutX="128.0" layoutY="142.0" mnemonicParsing="false" onAction="#processFile" text="Сформировать" />
-   <Button layoutX="25.0" layoutY="142.0" mnemonicParsing="false" onAction="#getFile" text="Выбрать файл" />
-   <TextField fx:id="labNumber" layoutX="137.0" layoutY="41.0" />
-   <TextField fx:id="groupNumber" layoutX="137.0" layoutY="73.0" />
-   <TextField fx:id="studentName" layoutX="137.0" layoutY="106.0" />
-   <Label layoutX="25.0" layoutY="45.0" text="Номер лабы" />
-   <Label layoutX="25.0" layoutY="77.0" text="Номер группы" />
-   <Label layoutX="25.0" layoutY="110.0" text="ФИО" />
-   <Label fx:id="fileNameLabel" layoutX="85.0" layoutY="167.0" />
-   <TextArea fx:id="checkstyleMessage" layoutX="20.0" layoutY="288.0" prefHeight="212.0" prefWidth="707.0" />
-   <TreeView fx:id="filesTreeView" layoutX="308.0" layoutY="31.0" prefHeight="247.0" prefWidth="404.0" />
-   <Button layoutX="32.0" layoutY="257.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="208.0" onAction="#chooseConfiguration" text="Выбрать конфигурацию checkstyle" />
-   <Button layoutX="31.0" layoutY="220.0" mnemonicParsing="false"  onAction="#chooseTemplate" text="Выбрать шаблон" />
-   <Label fx:id="labelTemplate" layoutX="32.0" layoutY="203.0" />
-   <Label fx:id="labelConfiguration" layoutX="32.0" layoutY="176.0" />
+<AnchorPane id="AnchorPane" prefHeight="659.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.rsreu.ars.controllers.ARSController">
+   <Button layoutX="31.0" layoutY="220.0" mnemonicParsing="false" onAction="#processFile" prefHeight="25.0" prefWidth="208.0" text="Сформировать отчет" />
+   <Button layoutX="31.0" layoutY="161.0" mnemonicParsing="false" onAction="#getFile" prefHeight="25.0" prefWidth="208.0" text="Выбрать архив с проектом" />
+
+   <TextArea fx:id="checkstyleMessage" layoutX="20.0" layoutY="316.0" prefHeight="259.0" prefWidth="995.0" />
+   <TreeView fx:id="filesTreeView" layoutX="536.0" layoutY="31.0" prefHeight="270.0" prefWidth="480.0" />
+   <Button layoutX="31.0" layoutY="98.0" mnemonicParsing="false" onAction="#chooseConfiguration" prefHeight="25.0" prefWidth="208.0" text="Выбрать конфигурацию checkstyle" />
+   <Button layoutX="31.0" layoutY="31.0" mnemonicParsing="false" onAction="#chooseTemplate" prefHeight="25.0" prefWidth="208.0" text="Выбрать шаблон" />
+   <Label fx:id="labelFileName" layoutX="32.0" layoutY="194.0" prefHeight="17.0" prefWidth="417.0" />
+   <Label fx:id="labelConfiguration" layoutX="31.0" layoutY="134.0" prefHeight="17.0" prefWidth="417.0" />
+   <Label fx:id="labelTemplate" layoutX="31.0" layoutY="70.0" prefHeight="17.0" prefWidth="417.0" />
 </AnchorPane>

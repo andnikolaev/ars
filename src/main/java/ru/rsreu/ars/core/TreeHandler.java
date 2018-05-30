@@ -18,13 +18,13 @@ public class TreeHandler {
     private String unzipDirectory;
     private Set<TreeItem<MyFile>> selected = new HashSet<>();
 
-    public TreeHandler(TreeView filesTreeView, String unzipDirectory){
+    public TreeHandler(TreeView filesTreeView, String unzipDirectory) {
         this.unzipDirectory = unzipDirectory;
         this.rootItem = new CheckBoxTreeItem(unzipDirectory);
         this.filesTreeView = filesTreeView;
     }
 
-    public void createAllTree(){
+    public void createAllTree() {
         // Hides the root item of the tree view.
         filesTreeView.setShowRoot(false);
         filesTreeView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -38,6 +38,7 @@ public class TreeHandler {
 
         // create tree
         for (File file : fileList) {
+
             createTree(file, rootItem);
         }
 // listen for selection change
@@ -62,30 +63,39 @@ public class TreeHandler {
 
     }
 
-    private void createTree(File file, CheckBoxTreeItem<MyFile> parent){
-        MyFile tempFile = new MyFile(file);
-        if (file.isDirectory()) {
+    private void createTree(File file, CheckBoxTreeItem<MyFile> parent) {
+        if (file.getName().charAt(0) != '.' && file.getName().charAt(0) != '_') {
+            System.out.println(file.getName());
+            MyFile tempFile = new MyFile(file);
+            if (file.isDirectory()) {
 
-            CheckBoxTreeItem<MyFile> treeItem = new CheckBoxTreeItem(tempFile);
-            parent.getChildren().add(treeItem);
-            for (File f : file.listFiles()) {
-                createTree(f, treeItem);
+                CheckBoxTreeItem<MyFile> treeItem = new CheckBoxTreeItem(tempFile);
+                parent.getChildren().add(treeItem);
+                for (File f : file.listFiles()) {
+                    createTree(f, treeItem);
+                }
+            } else {
+                parent.getChildren().add(new CheckBoxTreeItem(tempFile));
             }
-        } else {
-            parent.getChildren().add(new CheckBoxTreeItem(tempFile));
         }
     }
 
     public List<File> getAllSelected(TreeView tree) {
         List<File> selectedFiles = new ArrayList<>();
-        for(TreeItem<MyFile> myFileTreeItem : selected){
-            File file = myFileTreeItem.getValue().getFile();
-            if(!file.isDirectory()){
+        for (TreeItem<MyFile> myFileTreeItem : selected) {
+            File file = null;
+            try {
+                file = myFileTreeItem.getValue().getFile();
+            } catch (ClassCastException e) {
+                e.printStackTrace();
+            }
+
+            if (file != null && !file.isDirectory()) {
                 selectedFiles.add(myFileTreeItem.getValue().getFile());
             }
 
         }
-        return  selectedFiles;
+        return selectedFiles;
     }
 
 }

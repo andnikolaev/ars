@@ -1,13 +1,11 @@
 package ru.rsreu.ars.core.beans;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.File;
 
 public class MyFile {
     private File file;
 
-    public MyFile(@NotNull  File file){
+    public MyFile(File file){
         this.file = file;
     }
 

@@ -3,8 +3,9 @@ package ru.rsreu.ars.core;
 import com.puppycrawl.tools.checkstyle.Checkstyle;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.tutego.jrtf.Rtf;
+import com.tutego.jrtf.RtfInfo;
 import ru.rsreu.ars.core.beans.Report;
-import ru.rsreu.ars.utils.FileReader;
+import ru.rsreu.ars.utils.ARSFileReader;
 import ru.rsreu.ars.utils.Resourcer;
 
 import java.io.*;
@@ -22,13 +23,11 @@ public class ARSModel {
     private List<File> filesForListing;
 
 
-    private final static String template = "projects/template2.rtf";
-    private static final String checkstyleConfiguration = "projects/PrutzkowConfiguration.xml";
-
     public void generateReport(Report report) {
-        List<ZipEntry> fileEntries = ZIPHandler.getClassesEntry(file);
+//        List<ZipEntry> fileEntries = ZIPHandler.getClassesEntry(file);
 //        report.setListing(ZIPHandler.getDataForTemplate(file, fileEntries));
-        report.setListing(FileReader.getStringFromFiles(filesForListing));
+        unzipFile(file);
+        report.setListing(ARSFileReader.getStringFromFiles2(filesForListing));
         writeRtfFile(getUnzipDirectory(file.getName()) + ".rtf", report);
         deleteDirectory(new File(getUnzipDirectory(file.getName())));
     }
@@ -40,8 +39,8 @@ public class ARSModel {
         List<ZipEntry> fileEntries = ZIPHandler.getClassesEntry(file);
         for (ZipEntry entry : fileEntries) {
             if (entry.getName().contains(".java")) {
-                String sourceFilePath = getUnzipDirectory(file.getName()) + "\\" + entry.getName();
-                checkstyleResult.append(Checkstyle.start(sourceFilePath, checkstyleConfiguration));
+                String sourceFilePath = getUnzipDirectory(file.getName()) + File.separator + entry.getName();
+                checkstyleResult.append(Checkstyle.start(sourceFilePath, configuration.getAbsolutePath()));
             }
         }
         return checkstyleResult.toString();
@@ -51,13 +50,14 @@ public class ARSModel {
         FileInputStream fio = null;
         FileOutputStream fos = null;
         try {
-            fio = new FileInputStream(template);
+            fio = new FileInputStream(templateForReport);
             fos = new FileOutputStream(outputFileName);
-            Rtf.template(fio).inject("Num", report.getNumber()).inject("Student", String.format("%s\n%s", report.getGroup(), report.getOwner()))
+            String hash = Security.getMD5Checksum(file.getAbsolutePath(), configuration.getAbsolutePath());
+            Rtf.template(fio).info(RtfInfo.hash(hash)).injectAllNonReserved(report.getUserInformationMap())
                     .inject("Code", report.getCheckstyleResult() + report.getListing()).out(fos);
             fio.close();
             fos.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
@@ -90,22 +90,22 @@ public class ARSModel {
     }
 
     public Map<String, String> getAllIdentifiersFromTemplate() throws IOException {
-        FileInputStream fio = new FileInputStream(template);
+        FileInputStream fio = new FileInputStream(templateForReport);
         Map<String, String> map = Rtf.template(fio).findAllIdentificators();
         fio.close();
         return map;
     }
 
-    public Map<String,String> fillIdentifiersWithText(Set<String> identifiers){
-        Map<String,String> identifiersWithText = new HashMap<>();
-        for(String identifierKey : identifiers){
+    public Map<String, String> fillIdentifiersWithText(Set<String> identifiers) {
+        Map<String, String> identifiersWithText = new HashMap<>();
+        for (String identifierKey : identifiers) {
             identifiersWithText.put(identifierKey, getIdentifierText(identifierKey));
         }
 
         return identifiersWithText;
     }
 
-    private String getIdentifierText(String identifier){
+    private String getIdentifierText(String identifier) {
         return Resourcer.getString(identifier);
     }
 
@@ -115,8 +115,8 @@ public class ARSModel {
         return unzipDirectory;
     }
 
-    private String getUnzipDirectory(String fileName) {
-        String[] unzip = fileName.split(Pattern.quote("\\"));
+    public String getUnzipDirectory(String fileName) {
+        String[] unzip = fileName.split(Pattern.quote(File.separator));
         return unzip[unzip.length - 1].replace(".zip", "");
     }
 
@@ -151,4 +151,5 @@ public class ARSModel {
     public void setFilesForListing(List<File> filesForListing) {
         this.filesForListing = filesForListing;
     }
+
 }

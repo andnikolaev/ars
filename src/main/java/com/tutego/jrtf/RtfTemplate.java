@@ -31,6 +31,9 @@
  */
 package com.tutego.jrtf;
 
+import ru.rsreu.ars.core.TemplateIdentifier;
+import ru.rsreu.ars.core.beans.UserInformation;
+
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -72,6 +75,8 @@ public class RtfTemplate {
     private final static Pattern VARIABLE_PATTERN = Pattern.compile("%%(\\S+)%%",
             Pattern.DOTALL | Pattern.MULTILINE);
     private final static Pattern VARIABLE_PATTERN_NEW = Pattern.compile("%%(\\S+)#(\\S+)%%",
+            Pattern.DOTALL | Pattern.MULTILINE);
+    private final static Pattern VARIABLE_PATTERN_INFO = Pattern.compile("\\{\\\\info",
             Pattern.DOTALL | Pattern.MULTILINE);
 
     /**
@@ -119,6 +124,15 @@ public class RtfTemplate {
      */
     public RtfTemplate inject(Map<String, Object> map) {
         this.map.putAll(map);
+        return this;
+    }
+
+    public RtfTemplate injectAllNonReserved(Map<String, UserInformation> userInformationMap){
+        for (Map.Entry<String, UserInformation> entry : userInformationMap.entrySet()){
+            if(TemplateIdentifier.checkKeyTagOnUnresolved(entry.getKey())){
+                this.map.put(entry.getKey(), entry.getValue().getTextField().getText());
+            }
+        }
         return this;
     }
 
@@ -172,12 +186,20 @@ public class RtfTemplate {
         }
 
         matcher.appendTail(result);
-        if ( info.length() > 0 )
-        {
-            result.append( "{\\info" );
-            result.append( info );
-            result.append( "}\n" );
+        Matcher matcherInfo = VARIABLE_PATTERN_INFO.matcher(template);
+        if (matcherInfo.find()){
+            System.out.println("ttttt");
+            matcherInfo.appendReplacement(result, "{\\info"+info);
+            matcherInfo.appendTail(result);
+        } else {
+            if ( info.length() > 0 )
+            {
+                result.append( "{\\info" );
+                result.append( info );
+                result.append( "}\n" );
+            }
         }
+
         return result.toString();
     }
 

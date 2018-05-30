@@ -1,19 +1,17 @@
 package ru.rsreu.ars.core.beans;
 
+import java.util.Map;
+
 /**
  * Created by medwed on 9/20/2017.
  */
 public class Report {
-    private String owner;
-    private String group;
-    private String number;
+    private Map<String, UserInformation> userInformationMap;
     private String listing;
     private String checkstyleResult;
 
-    public Report(String owner, String group, String number, String checkstyleResult) {
-        this.owner = owner;
-        this.group = group;
-        this.number = number;
+    public Report(Map<String, UserInformation> userInformationMap, String checkstyleResult) {
+        this.userInformationMap = userInformationMap;
         this.checkstyleResult = checkstyleResult;
     }
 
@@ -30,18 +28,8 @@ public class Report {
         this.listing = listing;
     }
 
-    public String getNumber() {
-        return number;
-    }
-
-
-    public String getGroup() {
-        return group;
-    }
-
-
-    public String getOwner() {
-        return owner;
+    public Map<String, UserInformation> getUserInformationMap() {
+        return userInformationMap;
     }
 
 }

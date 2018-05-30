@@ -6,6 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
 import ru.rsreu.ars.TestRunner;
+import ru.rsreu.ars.core.TemplateIdentifier;
 import ru.rsreu.ars.core.beans.UserInformation;
 
 import java.util.*;
@@ -13,30 +14,38 @@ import java.util.*;
 public class UserInformationController {
     private Map<String, String> templateIdentifiersWithType;
     private Map<String, String> templateIdentifiersWithText;
+    private Map<String, UserInformation> userInformationMap;
+    private List<UserInformation> userInformationList;
 
     public UserInformationController(Map<String, String> templateIdentifiersWithType, Map<String, String> templateIdentifiersWithText) {
         this.templateIdentifiersWithType = templateIdentifiersWithType;
         this.templateIdentifiersWithText = templateIdentifiersWithText;
     }
 
-    public List<UserInformation> show() {
+    public Map<String, UserInformation> show() {
 
         // Custom dialog
         Dialog dialog = new Dialog<>();
-        dialog.setTitle("Test");
-        dialog.setHeaderText("This is a dialog. Enter info and \n" +
-                "press Okay (or click title bar 'X' for cancel).");
+        dialog.setTitle("User information");
+        dialog.setHeaderText("Fill all inputs.");
         dialog.setResizable(true);
 
         //TODO Переделать в map <Key, UserInformations>
-        List<UserInformation> userInformationsList = new ArrayList<>();
-        for (Map.Entry<String, String> entry : templateIdentifiersWithType.entrySet()) {
-            Label label = new Label(templateIdentifiersWithText.get(entry.getKey()));
-            TextField textField = new TextField();
-            UserInformation userInformation = new UserInformation(entry.getKey(), label, textField);
-            userInformationsList.add(userInformation);
-            System.out.println(entry.getKey() + "/" + entry.getValue());
+        if (userInformationMap == null || userInformationList == null) {
+            this.userInformationMap = new HashMap<>();
+            this.userInformationList = new ArrayList<>();
+            for (Map.Entry<String, String> entry : templateIdentifiersWithType.entrySet()) {
+                if (TemplateIdentifier.checkKeyTagOnUnresolved(entry.getKey())) {
+                    Label label = new Label(templateIdentifiersWithText.get(entry.getKey()));
+                    TextField textField = new TextField();
+                    UserInformation userInformation = new UserInformation(entry.getKey(), label, textField);
+                    userInformationList.add(userInformation);
+                    userInformationMap.put(entry.getKey(), userInformation);
+                    textField.appendText(userInformationMap.get(entry.getKey()).getTextField().getText());
+                }
+            }
         }
+
 
         // Create layout and add to dialog
         GridPane grid = new GridPane();
@@ -45,7 +54,7 @@ public class UserInformationController {
         grid.setVgap(10);
         grid.setPadding(new Insets(20, 35, 20, 35));
         int i = 1;
-        for (UserInformation userInformation : userInformationsList) {
+        for (UserInformation userInformation : userInformationList) {
             grid.add(userInformation.getLabel(), 1, i);
             grid.add(userInformation.getTextField(), 2, i);
             i++;
@@ -62,11 +71,27 @@ public class UserInformationController {
         // Show dialog
         Optional result = dialog.showAndWait();
 
-        ButtonType resultButton = (ButtonType)result.get();
+        ButtonType resultButton = (ButtonType) result.get();
         if (!resultButton.getText().equals("Cancel")) {
-            return userInformationsList;
+            return userInformationMap;
         }
         return null;
     }
+
+    public boolean checkUserInformation(Map<String, UserInformation> userInformation) {
+        boolean result = true;
+        if (userInformation.size() == 0) {
+            result = false;
+        }
+        for (Map.Entry<String, UserInformation> entry : userInformation.entrySet()) {
+            if (TemplateIdentifier.checkKeyTagOnUnresolved(entry.getKey())) {
+                if (entry.getValue().getTextField().getText().trim().isEmpty()) {
+                    result = false;
+                }
+            }
+        }
+        return result;
+    }
+
 
 }

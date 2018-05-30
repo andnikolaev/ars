@@ -1,0 +1,23 @@
+<component name="ArtifactManager">
+  <artifact name="AutomaticalReportSystem:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/AutomaticalReportSystem_jar</output-path>
+    <root id="root">
+      <element id="archive" name="AutomaticalReportSystem.jar">
+        <element id="module-output" name="AutomaticalReportSystem" />
+      </element>
+      <element id="library" level="project" name="Maven: com.google.code.findbugs:jsr305:1.3.9" />
+      <element id="library" level="project" name="Maven: commons-logging:commons-logging:1.2" />
+      <element id="library" level="project" name="Maven: com.google.errorprone:error_prone_annotations:2.0.18" />
+      <element id="library" level="project" name="Maven: net.sf.saxon:Saxon-HE:9.8.0-5" />
+      <element id="library" level="project" name="Maven: commons-beanutils:commons-beanutils:1.9.3" />
+      <element id="library" level="project" name="Maven: org.antlr:antlr4-runtime:4.7" />
+      <element id="library" level="project" name="Maven: org.jetbrains:annotations:15.0" />
+      <element id="library" level="project" name="Maven: commons-collections:commons-collections:3.2.2" />
+      <element id="library" level="project" name="Maven: com.google.j2objc:j2objc-annotations:1.1" />
+      <element id="library" level="project" name="Maven: antlr:antlr:2.7.7" />
+      <element id="library" level="project" name="Maven: org.codehaus.mojo:animal-sniffer-annotations:1.14" />
+      <element id="library" level="project" name="Maven: com.google.guava:guava:23.2-jre" />
+      <element id="library" level="project" name="Maven: commons-cli:commons-cli:1.4" />
+    </root>
+  </artifact>
+</component>

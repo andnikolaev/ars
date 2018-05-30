@@ -2,22 +2,23 @@ package ru.rsreu.ars.controllers;
 
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TreeView;
+import javafx.stage.FileChooser;
+import ru.rsreu.ars.core.ARSModel;
+import ru.rsreu.ars.core.TreeHandler;
+import ru.rsreu.ars.core.beans.Report;
+import ru.rsreu.ars.core.beans.UserInformation;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javafx.scene.Node;
-import javafx.scene.control.*;
-import javafx.stage.FileChooser;
-
-import javafx.fxml.FXML;
-import ru.rsreu.ars.core.beans.Report;
-import ru.rsreu.ars.core.ARSModel;
-import ru.rsreu.ars.core.TreeHandler;
-import ru.rsreu.ars.core.beans.UserInformation;
 
 /**
  * genarated by APX file generation template
@@ -26,17 +27,11 @@ import ru.rsreu.ars.core.beans.UserInformation;
 public class ARSController {
 
     @FXML
-    Label fileNameLabel;
+    Label labelFileName;
     @FXML
     Label labelTemplate;
     @FXML
     Label labelConfiguration;
-    @FXML
-    TextField labNumber;
-    @FXML
-    TextField groupNumber;
-    @FXML
-    TextField studentName;
     @FXML
     TextArea checkstyleMessage;
     @FXML
@@ -44,18 +39,22 @@ public class ARSController {
 
 
     private ARSModel model = new ARSModel();
-    private FileChooser fileChooser = new FileChooser();
     private TreeHandler treeHandler;
 
     @FXML
     private void getFile(ActionEvent event) {
+        if (!checkTemplateAndConfigurationFileInputs()) {
+            return;
+        }
         Node node = (Node) event.getSource();
+        FileChooser fileChooser = new FileChooser();
         fileChooser = FileChooserConfiguration.setProjectFileChooser(fileChooser);
         File file = fileChooser.showOpenDialog(node.getScene().getWindow());
         if (file != null) {
             model.setFile(file);
-            fileNameLabel.setText(file.getAbsolutePath());
-
+            labelFileName.setText(file.getPath());
+            //Generate tree
+            String unzipDirectory = model.unzipFile(file);
             //Checkstyle
             try {
                 checkstyleMessage.setText(model.checkstyle());
@@ -63,35 +62,43 @@ public class ARSController {
                 checkstyleMessage.setText(e.getMessage() + "\n" + e.getCause().getMessage());
             }
 
-            //Generate tree
-            String unzipDirectory = model.unzipFile(file);
+
             treeHandler = new TreeHandler(filesTreeView, unzipDirectory);
             treeHandler.createAllTree();
+            ARSModel.deleteDirectory(new File(model.getUnzipDirectory(file.getName())));
         }
     }
 
+
     @FXML
-    private void chooseConfiguration(ActionEvent event){
+    private void chooseConfiguration(ActionEvent event) {
         Node node = (Node) event.getSource();
+        FileChooser fileChooser = new FileChooser();
         fileChooser = FileChooserConfiguration.setCheckstyleConfigurationFileChooser(fileChooser);
         File file = fileChooser.showOpenDialog(node.getScene().getWindow());
         if (file != null) {
             model.setConfiguration(file);
+            labelConfiguration.setText(file.getPath());
         }
     }
 
     @FXML
-    private void chooseTemplate(ActionEvent event){
+    private void chooseTemplate(ActionEvent event) {
         Node node = (Node) event.getSource();
+        FileChooser fileChooser = new FileChooser();
         fileChooser = FileChooserConfiguration.setTemplateFileChooser(fileChooser);
         File file = fileChooser.showOpenDialog(node.getScene().getWindow());
         if (file != null) {
             model.setTemplateForReport(file);
+            labelTemplate.setText(file.getPath());
         }
     }
 
     @FXML
     private void processFile() {
+        if (!checkAllFileInputs()) {
+            return;
+        }
         Map<String, String> identifiersWithType = null;
 
         try {
@@ -101,33 +108,56 @@ public class ARSController {
             AlertController.showEmptyTemplateFileAlert();
         }
         Map<String, String> identifiersWithText = model.fillIdentifiersWithText(identifiersWithType.keySet());
-        UserInformationController userInformationController = new UserInformationController(identifiersWithType,identifiersWithText);
-        List<UserInformation> userInformations = userInformationController.show();
-        if(userInformations != null){
-            model.setFilesForListing(treeHandler.getAllSelected(filesTreeView));
-            if (model.getFile() == null) {
-                AlertController.showEmptyTemplateFileAlert();
-            } else if (studentName.getText().trim().isEmpty() || labNumber.getText().trim().isEmpty() || groupNumber.getText().trim().isEmpty()) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Warning Dialog");
-                alert.setContentText("Fill all inputs!");
-                alert.showAndWait();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                try {
-                    model.generateReport(new Report(studentName.getText(), groupNumber.getText(), labNumber.getText(), checkstyleMessage.getText()));
-                    alert.setTitle("Information Dialog");
-                    alert.setHeaderText(null);
-                    alert.setContentText("I have a great message for you!");
-                    alert.showAndWait();
-                } catch (Exception e){
-                    alert.setTitle("Information Dialog");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Please close file with report!");
-                    alert.showAndWait();
-                }
+        UserInformationController userInformationController = new UserInformationController(identifiersWithType, identifiersWithText);
+        Map<String, UserInformation> userInformation = new HashMap<>();
+        while (userInformation != null && !userInformationController.checkUserInformation(userInformation)) {
+            userInformation = userInformationController.show();
+        }
+        if (userInformation != null) {
+
+            List<File> selectedFiles = treeHandler.getAllSelected(filesTreeView);
+            if (!checkSelectedFiles(selectedFiles)) {
+                AlertController.showNonSelectFileForListingAlert();
+                return;
             }
+            model.setFilesForListing(selectedFiles);
+            model.generateReport(new Report(userInformation, checkstyleMessage.getText()));
+
         }
 
+    }
+
+    private boolean checkSelectedFiles(List<File> selectedFiles) {
+        if (selectedFiles.size() > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkAllFileInputs() {
+        boolean result = true;
+        if (labelTemplate.getText().isEmpty()) {
+            AlertController.showEmptyTemplateLinkAlert();
+            result = false;
+        } else if (labelConfiguration.getText().isEmpty()) {
+            AlertController.showEmptyCheckstyleConfigurationLinkAlert();
+            result = false;
+        } else if (labelFileName.getText().isEmpty()) {
+            AlertController.showEmptySourceFileLinkAlert();
+            result = false;
+        }
+        return result;
+    }
+
+    private boolean checkTemplateAndConfigurationFileInputs() {
+        boolean result = true;
+        if (labelTemplate.getText().isEmpty()) {
+            AlertController.showEmptyTemplateLinkAlert();
+            result = false;
+        } else if (labelConfiguration.getText().isEmpty()) {
+            AlertController.showEmptyCheckstyleConfigurationLinkAlert();
+            result = false;
+        }
+        return result;
     }
 }
