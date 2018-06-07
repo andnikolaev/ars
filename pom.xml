@@ -155,6 +155,11 @@
             <artifactId>Saxon-HE</artifactId>
             <version>${saxon.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.pacesys</groupId>
+            <artifactId>reflect</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>

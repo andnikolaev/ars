@@ -9,6 +9,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TreeView;
 import javafx.stage.FileChooser;
 import ru.rsreu.ars.core.ARSModel;
+import ru.rsreu.ars.core.RtfReportWriter;
 import ru.rsreu.ars.core.TreeHandler;
 import ru.rsreu.ars.core.beans.Report;
 import ru.rsreu.ars.core.beans.UserInformation;
@@ -57,7 +58,7 @@ public class ARSController {
             String unzipDirectory = model.unzipFile(file);
             //Checkstyle
             try {
-                checkstyleMessage.setText(model.checkstyle());
+                checkstyleMessage.setText(model.runChecks());
             } catch (FileNotFoundException | CheckstyleException e) {
                 checkstyleMessage.setText(e.getMessage() + "\n" + e.getCause().getMessage());
             }
@@ -121,7 +122,7 @@ public class ARSController {
                 return;
             }
             model.setFilesForListing(selectedFiles);
-            model.generateReport(new Report(userInformation, checkstyleMessage.getText()));
+            model.generateReport(new Report(userInformation, checkstyleMessage.getText()), new RtfReportWriter());
 
         }
 

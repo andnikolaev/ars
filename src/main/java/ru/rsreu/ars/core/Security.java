@@ -24,7 +24,7 @@ public class Security {
     }
 
 
-    public static byte[] createChecksum(String filename) throws Exception {
+    private static byte[] createChecksum(String filename) throws Exception {
         InputStream fis = new FileInputStream(filename);
 
         byte[] buffer = new byte[1024];

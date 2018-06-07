@@ -1,20 +1,25 @@
 package ru.rsreu.ars.core;
 
-import com.puppycrawl.tools.checkstyle.Checkstyle;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.tutego.jrtf.Rtf;
-import com.tutego.jrtf.RtfInfo;
 import ru.rsreu.ars.core.beans.Report;
+import ru.rsreu.ars.core.beans.CheckResult;
+import ru.rsreu.ars.core.checks.CodeChecker;
+import ru.rsreu.ars.core.checks.RunCheck;
 import ru.rsreu.ars.utils.ARSFileReader;
 import ru.rsreu.ars.utils.Resourcer;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
-import java.util.zip.ZipEntry;
 
 public class ARSModel {
     private File file;
@@ -23,54 +28,49 @@ public class ARSModel {
     private List<File> filesForListing;
 
 
-    public void generateReport(Report report) {
+    public void generateReport(Report report, ReportWriter reportWriter) {
 //        List<ZipEntry> fileEntries = ZIPHandler.getClassesEntry(file);
 //        report.setListing(ZIPHandler.getDataForTemplate(file, fileEntries));
         unzipFile(file);
         report.setListing(ARSFileReader.getStringFromFiles2(filesForListing));
-        writeRtfFile(getUnzipDirectory(file.getName()) + ".rtf", report);
+        String hash = null;
+        try{
+           hash = Security.getMD5Checksum(file.getAbsolutePath(), configuration.getAbsolutePath());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        reportWriter.writeReportFile(templateForReport,getUnzipDirectory(file.getName()) + ".rtf",report, hash);
         deleteDirectory(new File(getUnzipDirectory(file.getName())));
     }
 
 
-    public String checkstyle() throws FileNotFoundException, CheckstyleException {
-        StringBuilder checkstyleResult = new StringBuilder();
-
-        List<ZipEntry> fileEntries = ZIPHandler.getClassesEntry(file);
-        for (ZipEntry entry : fileEntries) {
-            if (entry.getName().contains(".java")) {
-                String sourceFilePath = getUnzipDirectory(file.getName()) + File.separator + entry.getName();
-                checkstyleResult.append(Checkstyle.start(sourceFilePath, configuration.getAbsolutePath()));
+    public String runChecks() throws FileNotFoundException, CheckstyleException {
+        Class c = CodeChecker.class;
+        Method[] methods = c.getMethods();
+        StringBuilder stringBuilder = new StringBuilder();
+        for(Method mt : methods) {
+            if (mt.isAnnotationPresent(RunCheck.class)) {
+                // Invoke method with appropriate arguments
+                try {
+                    Object obj = mt.invoke(c,file, configuration);
+                    CheckResult checkResult = (CheckResult) obj;
+                    stringBuilder.append(checkResult.getResult());
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
+                }
             }
         }
-        return checkstyleResult.toString();
-    }
-
-    private void writeRtfFile(String outputFileName, Report report) {
-        FileInputStream fio = null;
-        FileOutputStream fos = null;
-        try {
-            fio = new FileInputStream(templateForReport);
-            fos = new FileOutputStream(outputFileName);
-            String hash = Security.getMD5Checksum(file.getAbsolutePath(), configuration.getAbsolutePath());
-            Rtf.template(fio).info(RtfInfo.hash(hash)).injectAllNonReserved(report.getUserInformationMap())
-                    .inject("Code", report.getCheckstyleResult() + report.getListing()).out(fos);
-            fio.close();
-            fos.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (fio != null) {
-                    fio.close();
-                }
-                if (fos != null) {
-                    fos.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        return stringBuilder.toString();
+//        StringBuilder checkstyleResult = new StringBuilder();
+//
+//        List<ZipEntry> fileEntries = ZIPHandler.getClassesEntry(file);
+//        for (ZipEntry entry : fileEntries) {
+//            if (entry.getName().contains(".java")) {
+//                String sourceFilePath = getUnzipDirectory(file.getName()) + File.separator + entry.getName();
+//                checkstyleResult.append(Checkstyle.start(sourceFilePath, configuration.getAbsolutePath()));
+//            }
+//        }
+//        return checkstyleResult.toString();
     }
 
     public static boolean deleteDirectory(File directory) {
@@ -115,7 +115,7 @@ public class ARSModel {
         return unzipDirectory;
     }
 
-    public String getUnzipDirectory(String fileName) {
+    public static String getUnzipDirectory(String fileName) {
         String[] unzip = fileName.split(Pattern.quote(File.separator));
         return unzip[unzip.length - 1].replace(".zip", "");
     }

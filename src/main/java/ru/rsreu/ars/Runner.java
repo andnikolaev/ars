@@ -15,6 +15,7 @@ public class Runner extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("MainView.fxml"));
         primaryStage.setScene(new Scene(root));
+        primaryStage.setTitle("Система автоматических отчетов");
         primaryStage.show();
     }
 

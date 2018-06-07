@@ -4,8 +4,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.util.Callback;
-import ru.rsreu.ars.TestRunner;
 import ru.rsreu.ars.core.TemplateIdentifier;
 import ru.rsreu.ars.core.beans.UserInformation;
 
@@ -26,8 +24,8 @@ public class UserInformationController {
 
         // Custom dialog
         Dialog dialog = new Dialog<>();
-        dialog.setTitle("User information");
-        dialog.setHeaderText("Fill all inputs.");
+        dialog.setTitle("Информация о пользователе");
+        dialog.setHeaderText("Заполните все поля ФИО студента: Группа: ");
         dialog.setResizable(true);
 
         //TODO Переделать в map <Key, UserInformations>
@@ -62,8 +60,8 @@ public class UserInformationController {
         dialog.getDialogPane().setContent(grid);
 
         // Add button to dialog
-        ButtonType buttonTypeOk = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
-        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonType buttonTypeOk = new ButtonType("Ок", ButtonBar.ButtonData.OK_DONE);
+        ButtonType buttonTypeCancel = new ButtonType("Отмена", ButtonBar.ButtonData.CANCEL_CLOSE);
         dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
         dialog.getDialogPane().getButtonTypes().add(buttonTypeCancel);
 
@@ -72,7 +70,7 @@ public class UserInformationController {
         Optional result = dialog.showAndWait();
 
         ButtonType resultButton = (ButtonType) result.get();
-        if (!resultButton.getText().equals("Cancel")) {
+        if (!resultButton.getText().equals("Отмена")) {
             return userInformationMap;
         }
         return null;
