@@ -188,7 +188,6 @@ public class RtfTemplate {
         matcher.appendTail(result);
         Matcher matcherInfo = VARIABLE_PATTERN_INFO.matcher(template);
         if (matcherInfo.find()){
-            System.out.println("ttttt");
             matcherInfo.appendReplacement(result, "{\\info"+info);
             matcherInfo.appendTail(result);
         } else {

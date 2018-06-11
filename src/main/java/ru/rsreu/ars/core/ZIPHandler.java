@@ -7,8 +7,16 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
+/***
+ * Класс для работы с архивами
+ */
 public class ZIPHandler {
-
+    /***
+     * Получение информации для шаблона
+     * @param file шаблон
+     * @param zipEntry элементы архива
+     * @return Результат
+     */
     public static String getDataForTemplate(File file, List<ZipEntry> zipEntry) {
         ZipFile zf = null;
         BufferedReader br = null;
@@ -43,9 +51,10 @@ public class ZIPHandler {
         return sb.toString();
     }
 
-    /**
-     * Unzip it
-     * @param zipFile input zip file
+    /***
+     * Разархивация
+     * @param zipFile Архив
+     * @param outputFolder Конечная папка
      */
     public static void unZipIt(String zipFile, String outputFolder){
 
@@ -95,6 +104,11 @@ public class ZIPHandler {
         }
     }
 
+    /***
+     * Получение всех java классов из архива
+     * @param file Архив
+     * @return Список java классов
+     */
     public static List<ZipEntry> getClassesEntry(File file) {
         List<ZipEntry> zipEntries = new ArrayList<>();
         try (ZipInputStream zin = new ZipInputStream(new FileInputStream(file))) {

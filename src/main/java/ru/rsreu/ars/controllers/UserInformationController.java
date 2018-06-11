@@ -9,6 +9,9 @@ import ru.rsreu.ars.core.beans.UserInformation;
 
 import java.util.*;
 
+/***
+ * Класс контроллер для пользовательской информации
+ */
 public class UserInformationController {
     private Map<String, String> templateIdentifiersWithType;
     private Map<String, String> templateIdentifiersWithText;
@@ -20,12 +23,16 @@ public class UserInformationController {
         this.templateIdentifiersWithText = templateIdentifiersWithText;
     }
 
+    /***
+     * Отображение диалогового окна для ввода пользовательской информации
+     * @return Пользовательская информация
+     */
     public Map<String, UserInformation> show() {
 
         // Custom dialog
         Dialog dialog = new Dialog<>();
         dialog.setTitle("Информация о пользователе");
-        dialog.setHeaderText("Заполните все поля ФИО студента: Группа: ");
+        dialog.setHeaderText("Заполните все поля");
         dialog.setResizable(true);
 
         //TODO Переделать в map <Key, UserInformations>
@@ -45,7 +52,7 @@ public class UserInformationController {
         }
 
 
-        // Create layout and add to dialog
+        // Создание и вывод окон ввода
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
@@ -76,6 +83,11 @@ public class UserInformationController {
         return null;
     }
 
+    /***
+     * Проверка информации введенной пользователем
+     * @param userInformation Информация о пользователе
+     * @return Верно ли введена информация о пользователе
+     */
     public boolean checkUserInformation(Map<String, UserInformation> userInformation) {
         boolean result = true;
         if (userInformation.size() == 0) {

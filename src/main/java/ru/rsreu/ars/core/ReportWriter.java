@@ -5,5 +5,5 @@ import ru.rsreu.ars.core.beans.Report;
 import java.io.File;
 
 public interface ReportWriter {
-    void writeReportFile(File templateForReport, String outputFileName, Report report, String hash);
+    void writeReportFile(File archive, File templateForReport, File configuration, String outputFileName, Report report);
 }

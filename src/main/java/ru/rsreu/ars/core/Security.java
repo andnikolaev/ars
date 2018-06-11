@@ -44,17 +44,29 @@ public class Security {
 
     // see this How-to for a faster way to convert
     // a byte array to a HEX string
-    public static String getMD5Checksum(String fileNameZip, String fileNameConfiguration) throws Exception {
+    public static String getMD5Checksum(String fileNameZip, String fileNameConfiguration, String template, String report) throws Exception {
         byte[] b = createChecksum(fileNameZip);
         byte[] c = createChecksum(fileNameConfiguration);
+        byte[] t = createChecksum(template);
+        byte[] r = createChecksum(report);
         StringBuilder result = new StringBuilder();
 
         for (byte aB : b) {
             result.append(Integer.toString((aB & 0xff) + 0x100, 16).substring(1));
         }
-        for (byte aC :c) {
+        result.append(":");
+        for (byte aC : c) {
             result.append(Integer.toString((aC & 0xff) + 0x100, 16).substring(1));
         }
+        result.append(":");
+        for (byte aT : t) {
+            result.append(Integer.toString((aT & 0xff) + 0x100, 16).substring(1));
+        }
+        result.append(":");
+        for (byte aR : r) {
+            result.append(Integer.toString((aR & 0xff) + 0x100, 16).substring(1));
+        }
+
         return result.toString();
     }
 }

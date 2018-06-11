@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TreeView;
 import javafx.stage.FileChooser;
 import ru.rsreu.ars.core.ARSModel;
@@ -22,8 +23,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * genarated by APX file generation template
- * File name: ARSController.java
+ * Тема ВКР: Разработка программной системы автоматизации составления отчетов по практическим заданиям
+ * Выполнил: Николаев А.И. 09.03.04 гр.4413
+ * Руководитель: Пруцков А.В., доктор технических наук, профессор каф. ВПМ
+ * Средства разработки: Java, IntelliJ IDEA
+ * Назанчение: Формирование отчетов и проверка качества кода
+ * Дата разработки: 04.04.2018
  */
 public class ARSController {
 
@@ -42,14 +47,17 @@ public class ARSController {
     private ARSModel model = new ARSModel();
     private TreeHandler treeHandler;
 
+    /***
+     * Получение архива проекта
+     * @param event Событие
+     */
     @FXML
     private void getFile(ActionEvent event) {
         if (!checkTemplateAndConfigurationFileInputs()) {
             return;
         }
         Node node = (Node) event.getSource();
-        FileChooser fileChooser = new FileChooser();
-        fileChooser = FileChooserConfiguration.setProjectFileChooser(fileChooser);
+        FileChooser fileChooser = FileChooserConfigurationFactory.makeProjectFileChooser();
         File file = fileChooser.showOpenDialog(node.getScene().getWindow());
         if (file != null) {
             model.setFile(file);
@@ -70,12 +78,37 @@ public class ARSController {
         }
     }
 
+    /***
+     * Загрузка шаблона из интернета
+     * @param event событие на форме
+     */
+    @FXML
+    private void downloadTemplateFromInternet(ActionEvent event){
+        DownloadFileController downloadFileController = new DownloadFileController();
+        TextField textField = new TextField();
+        while (textField != null && !downloadFileController.validate(textField)) {
+            textField = downloadFileController.show("url шаблона: ","Загрузка шаблона отчета", "Загрузить шаблон");
+        }
 
+    }
+    @FXML
+    private void downloadConfigurationFromInternet(ActionEvent event){
+        DownloadFileController downloadFileController = new DownloadFileController();
+        TextField textField = new TextField();
+        while (textField != null && !downloadFileController.validate(textField)) {
+            textField = downloadFileController.show("url конфигурации checkstyle: ","Загрузка конфигурации checkstyle","Загрузить конф. checkstyle");
+        }
+
+    }
+
+    /***
+     * Выбор конфигурации
+     * @param event событие формы
+     */
     @FXML
     private void chooseConfiguration(ActionEvent event) {
         Node node = (Node) event.getSource();
-        FileChooser fileChooser = new FileChooser();
-        fileChooser = FileChooserConfiguration.setCheckstyleConfigurationFileChooser(fileChooser);
+        FileChooser fileChooser = FileChooserConfigurationFactory.makeCheckstyleConfigurationFileChooser();
         File file = fileChooser.showOpenDialog(node.getScene().getWindow());
         if (file != null) {
             model.setConfiguration(file);
@@ -83,11 +116,14 @@ public class ARSController {
         }
     }
 
+    /***
+     * Выбор шаблона для отчета
+     * @param event событие формы
+     */
     @FXML
     private void chooseTemplate(ActionEvent event) {
         Node node = (Node) event.getSource();
-        FileChooser fileChooser = new FileChooser();
-        fileChooser = FileChooserConfiguration.setTemplateFileChooser(fileChooser);
+        FileChooser fileChooser = FileChooserConfigurationFactory.makeTemplateFileChooser();
         File file = fileChooser.showOpenDialog(node.getScene().getWindow());
         if (file != null) {
             model.setTemplateForReport(file);
@@ -95,6 +131,9 @@ public class ARSController {
         }
     }
 
+    /***
+     * Формирование отчета
+     */
     @FXML
     private void processFile() {
         if (!checkAllFileInputs()) {
@@ -128,6 +167,11 @@ public class ARSController {
 
     }
 
+    /***
+     * Проверка выбранных файлов в иерархии файлов и папок
+     * @param selectedFiles Выбиранные файлы
+     * @return Выбранные файлы прошли проверку или нет
+     */
     private boolean checkSelectedFiles(List<File> selectedFiles) {
         if (selectedFiles.size() > 0) {
             return true;
@@ -135,6 +179,10 @@ public class ARSController {
         return false;
     }
 
+    /***
+     * Проверка всех полей ввода
+     * @return Все поля заполнены верно или нет
+     */
     private boolean checkAllFileInputs() {
         boolean result = true;
         if (labelTemplate.getText().isEmpty()) {
@@ -150,6 +198,10 @@ public class ARSController {
         return result;
     }
 
+    /***
+     * Проверка загрузки шаблона и конфигурационного файла checkstyle
+     * @return
+     */
     private boolean checkTemplateAndConfigurationFileInputs() {
         boolean result = true;
         if (labelTemplate.getText().isEmpty()) {

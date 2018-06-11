@@ -5,7 +5,7 @@ import com.tutego.jrtf.Rtf;
 import ru.rsreu.ars.core.beans.Report;
 import ru.rsreu.ars.core.beans.CheckResult;
 import ru.rsreu.ars.core.checks.CodeChecker;
-import ru.rsreu.ars.core.checks.RunCheck;
+import ru.rsreu.ars.core.annotations.RunCheck;
 import ru.rsreu.ars.utils.ARSFileReader;
 import ru.rsreu.ars.utils.Resourcer;
 
@@ -21,29 +21,38 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+/***
+ * Класс, где содержится основная бизнес-логика сситемы
+ */
 public class ARSModel {
+    //Архив с проектом
     private File file;
+    //Шаблон
     private File templateForReport;
+    //Конфигурация checkstyle
     private File configuration;
+    //Файлы для листинга
     private List<File> filesForListing;
 
-
+    /***
+     * Формирование отчета
+     * @param report Информация для отчета
+     * @param reportWriter Класс для сохранения отчета
+     */
     public void generateReport(Report report, ReportWriter reportWriter) {
-//        List<ZipEntry> fileEntries = ZIPHandler.getClassesEntry(file);
-//        report.setListing(ZIPHandler.getDataForTemplate(file, fileEntries));
         unzipFile(file);
         report.setListing(ARSFileReader.getStringFromFiles2(filesForListing));
-        String hash = null;
-        try{
-           hash = Security.getMD5Checksum(file.getAbsolutePath(), configuration.getAbsolutePath());
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        reportWriter.writeReportFile(templateForReport,getUnzipDirectory(file.getName()) + ".rtf",report, hash);
+
+        reportWriter.writeReportFile(file, templateForReport, configuration,getUnzipDirectory(file.getName()) + ".rtf",report);
         deleteDirectory(new File(getUnzipDirectory(file.getName())));
     }
 
-
+    /***
+     * Запуск проверок исходного кода
+     * @return Результат проверок
+     * @throws FileNotFoundException Ошибка. Файл не найден.
+     * @throws CheckstyleException Ошибка checkstyle.
+     */
     public String runChecks() throws FileNotFoundException, CheckstyleException {
         Class c = CodeChecker.class;
         Method[] methods = c.getMethods();
@@ -52,27 +61,24 @@ public class ARSModel {
             if (mt.isAnnotationPresent(RunCheck.class)) {
                 // Invoke method with appropriate arguments
                 try {
-                    Object obj = mt.invoke(c,file, configuration);
+                    Object obj = mt.invoke(c.newInstance(),file, configuration);
                     CheckResult checkResult = (CheckResult) obj;
                     stringBuilder.append(checkResult.getResult());
                 } catch (IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
+                } catch (InstantiationException e) {
                     e.printStackTrace();
                 }
             }
         }
         return stringBuilder.toString();
-//        StringBuilder checkstyleResult = new StringBuilder();
-//
-//        List<ZipEntry> fileEntries = ZIPHandler.getClassesEntry(file);
-//        for (ZipEntry entry : fileEntries) {
-//            if (entry.getName().contains(".java")) {
-//                String sourceFilePath = getUnzipDirectory(file.getName()) + File.separator + entry.getName();
-//                checkstyleResult.append(Checkstyle.start(sourceFilePath, configuration.getAbsolutePath()));
-//            }
-//        }
-//        return checkstyleResult.toString();
     }
 
+    /***
+     * Удаление директории
+     * @param directory Удаляемая лиректория
+     * @return Результат удаления
+     */
     public static boolean deleteDirectory(File directory) {
         if (directory.exists()) {
             File[] files = directory.listFiles();
@@ -89,6 +95,11 @@ public class ARSModel {
         return (directory.delete());
     }
 
+    /***
+     * Получить все метки из шаблона
+     * @return Карта меток
+     * @throws IOException Ошибка чтения файла шаблона
+     */
     public Map<String, String> getAllIdentifiersFromTemplate() throws IOException {
         FileInputStream fio = new FileInputStream(templateForReport);
         Map<String, String> map = Rtf.template(fio).findAllIdentificators();
@@ -96,6 +107,11 @@ public class ARSModel {
         return map;
     }
 
+    /***
+     * Заполнить метки текстом
+     * @param identifiers Метки
+     * @return Карта меток
+     */
     public Map<String, String> fillIdentifiersWithText(Set<String> identifiers) {
         Map<String, String> identifiersWithText = new HashMap<>();
         for (String identifierKey : identifiers) {
@@ -105,16 +121,31 @@ public class ARSModel {
         return identifiersWithText;
     }
 
+    /***
+     * Получение текста из метки
+     * @param identifier Метка
+     * @return Текст из метки
+     */
     private String getIdentifierText(String identifier) {
         return Resourcer.getString(identifier);
     }
 
+    /***
+     * Разархивация файла
+     * @param file Архив
+     * @return Директория
+     */
     public String unzipFile(File file) {
         String unzipDirectory = getUnzipDirectory(file.getName());
         ZIPHandler.unZipIt(file.getAbsolutePath(), unzipDirectory);
         return unzipDirectory;
     }
 
+    /***
+     * Получение директории для разархивации
+     * @param fileName архив
+     * @return Имя директории
+     */
     public static String getUnzipDirectory(String fileName) {
         String[] unzip = fileName.split(Pattern.quote(File.separator));
         return unzip[unzip.length - 1].replace(".zip", "");

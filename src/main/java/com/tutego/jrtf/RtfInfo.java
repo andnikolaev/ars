@@ -116,4 +116,9 @@ public class RtfInfo
     // <author> '{' \author #PCDATA '}'
     return new RtfInfo( "{\\\\id " + Rtf.asRtf( hash ) + "}" );
   }
+  public static RtfInfo emptyHashId()
+  {
+    // <author> '{' \author #PCDATA '}'
+    return new RtfInfo( "{\\\\id }" );
+  }
 }

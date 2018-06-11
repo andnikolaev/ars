@@ -4,9 +4,10 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 
-public class FileChooserConfiguration {
-    public static FileChooser setProjectFileChooser(FileChooser fileChooser) {
-        fileChooser.setTitle("Choose archive with java project");
+public class FileChooserConfigurationFactory {
+    public static FileChooser makeProjectFileChooser() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Выберите архив с проектом");
         fileChooser.setInitialDirectory(
                 new File("projects")
         );
@@ -15,8 +16,9 @@ public class FileChooserConfiguration {
         );
         return fileChooser;
     }
-    public static FileChooser setTemplateFileChooser(FileChooser fileChooser) {
-        fileChooser.setTitle("Choose template for report");
+    public static FileChooser makeTemplateFileChooser() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Выберите шаблон для отчета");
         fileChooser.setInitialDirectory(
                 new File("projects")
         );
@@ -25,8 +27,9 @@ public class FileChooserConfiguration {
         );
         return fileChooser;
     }
-    public static FileChooser setCheckstyleConfigurationFileChooser(FileChooser fileChooser) {
-        fileChooser.setTitle("Choose checkstyle configuration");
+    public static FileChooser makeCheckstyleConfigurationFileChooser() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Выберите конфигурацию checkstyle");
         fileChooser.setInitialDirectory(
                 new File("projects")
         );

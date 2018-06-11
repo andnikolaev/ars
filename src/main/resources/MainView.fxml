@@ -17,6 +17,6 @@
    <Label fx:id="labelFileName" layoutX="32.0" layoutY="194.0" prefHeight="17.0" prefWidth="417.0" />
    <Label fx:id="labelConfiguration" layoutX="31.0" layoutY="134.0" prefHeight="17.0" prefWidth="417.0" />
    <Label fx:id="labelTemplate" layoutX="31.0" layoutY="70.0" prefHeight="17.0" prefWidth="417.0" />
-   <Button layoutX="248.0" layoutY="31.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="260.0" text="Загрузить шаблон из интернета" />
-   <Button layoutX="248.0" layoutY="98.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="260.0" text="Загрузить конф. checkstyle из интернета" />
+   <Button layoutX="248.0" layoutY="31.0" mnemonicParsing="false" onAction="#downloadTemplateFromInternet" prefHeight="25.0" prefWidth="260.0" text="Загрузить шаблон из интернета" />
+   <Button layoutX="248.0" layoutY="98.0" mnemonicParsing="false" onAction="#downloadConfigurationFromInternet" prefHeight="25.0" prefWidth="260.0" text="Загрузить конф. checkstyle из интернета" />
 </AnchorPane>

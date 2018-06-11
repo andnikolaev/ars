@@ -117,7 +117,7 @@ public class Rtf
    * @param rawText Raw text.
    * @return RTF encoded string.
    */
-  static String asRtf( String rawText )
+  public static String asRtf( String rawText )
   {
     if ( rawText == null )
       return null;
